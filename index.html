@@ -1,76 +1,341 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  </head>
-  <body>
-<body class="bg-white p-8">
-    <h1 class="text-2xl font-bold text-gray-800 mb-15 text-center">Top Performing Bus</h1>
-    <!-- Container -->
-    <div class="container mx-auto max-w-4xl bg-gray-100 rounded-lg p-3">
-        <!-- Table Container -->
-        <div class="overflow-x-auto border border-gray-200 rounded-lg">
-            <!-- Table -->
-            <table class="min-w-full">
-                <!-- Table Header -->
-                <thead class="bg-[oklch(86.9%_0.005_56.366)] border-b-10 border-gray-100">
-                    <tr>
-                        <th class="font-serif px-6 py-3 text-center text-s font-medium text-black-500 tracking-wider">Bus #</th>
-                        <th class="font-serif px-6 py-3 text-center text-s font-medium text-black-500 tracking-wider">Coverage</th>
-                        <th class="font-serif px-6 py-3 text-center text-s font-medium text-black-500 tracking-wider">Revenue</th>
-                        <th class="font-serif px-6 py-3 text-center text-s font-medium text-black-500 tracking-wider">Tickets Sold</th>
-                        <th class="font-serif px-6 py-3 text-center text-s font-medium text-black-500 tracking-wider"># of Trips</th>
-                    </tr>
-                </thead>
-                
-                <!-- Table Body -->
-                <tbody class="bg-white divide-y divide-gray-200">
-                    
-                    <!-- Row 1 -->
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">10</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">Monumento to PITX - vice versa</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">₱12,000.00</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">489 Tickets</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">8</td>
-                    </tr>
-                    <!-- Row 2 -->
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">15</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">Jordan Plains to Quezonn City Hall</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">₱10,000.00</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">369 Tickets</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">9</td>
-                    </tr>
-                    <!-- Row 3 -->
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">01</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">San Rafael Terminal to Q.C. Hall</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">₱9,000.00</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">305 Tickets</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">8</td>
-                    </tr>
-                    <!-- Row 4 -->
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">23</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">Monumento to PITX</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">₱8,000.00</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">299 Tickets</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">7</td>
-                    </tr>
-                    <!-- Row 5 -->
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">06</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">Monumento to PITX</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">₱7,000.00</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">206 Tickets</td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-black-500">8</td>
-                    </tr>
-                </tbody>
-            </table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS Device Comparison Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        .fade-in {
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .device-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .device-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-12">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">POS Device Comparison Tool</h1>
+            <p class="text-gray-600 max-w-2xl mx-auto">Import your Excel file with POS device data to view and compare specifications</p>
+        </header>
+
+        <!-- File Upload Section -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-4 md:mb-0">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-2">Upload Excel File</h2>
+                    <p class="text-gray-600">Import an Excel file with the columns: Family, Model, OS / Version, Has GMS?, Paper Width, Roll OD, Power Method, Battery Capacity, Main Distinction, Usecase</p>
+                </div>
+                <div class="relative">
+                    <input type="file" id="fileInput" accept=".xlsx, .xls" class="hidden">
+                    <label for="fileInput" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg cursor-pointer transition duration-200 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        Choose Excel File
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div id="filterSection" class="bg-white rounded-lg shadow-md p-6 mb-8 hidden">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Filter Devices</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Family</label>
+                    <select id="familyFilter" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">All Families</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Power Method</label>
+                    <select id="powerFilter" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">All Power Methods</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Has GMS?</label>
+                    <select id="gmsFilter" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-5 00">
+                        <option value="">All</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option value="Optional">Optional</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                    <input type="text" id="searchInput" placeholder="Search models..." class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Display Section -->
+        <div id="dataSection" class="hidden">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-gray-800">POS Devices</h2>
+                <div class="text-sm text-gray-600">
+                    <span id="deviceCount">0</span> devices found
+                </div>
+            </div>
+
+            <!-- Table View -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Family</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Model</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">OS</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">GMS</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Paper Width</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Power</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Use Case</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
+                            <!-- Table rows will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Card View -->
+            <div id="cardView" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Device cards will be inserted here -->
+            </div>
+        </div>
+
+        <!-- No Data Message -->
+        <div id="noDataMessage" class="text-center py-12 hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <h3 class="text-xl font-medium text-gray-700 mb-2">No Data Available</h3>
         </div>
     </div>
-  </body>
+
+    <script>
+        
+        let deviceData = [];
+        let filteredData = [];
+
+        // DOM elements
+        const fileInput = document.getElementById('fileInput');
+        const filterSection = document.getElementById('filterSection');
+        const dataSection = document.getElementById('dataSection');
+        const noDataMessage = document.getElementById('noDataMessage');
+        const tableBody = document.getElementById('tableBody');
+        const cardView = document.getElementById('cardView');
+        const deviceCount = document.getElementById('deviceCount');
+        const familyFilter = document.getElementById('familyFilter');
+        const powerFilter = document.getElementById('powerFilter');
+        const gmsFilter = document.getElementById('gmsFilter');
+        const searchInput = document.getElementById('searchInput');
+
+        // Event listeners
+        fileInput.addEventListener('change', handleFileUpload);
+        familyFilter.addEventListener('change', applyFilters);
+        powerFilter.addEventListener('change', applyFilters);
+        gmsFilter.addEventListener('change', applyFilters);
+        searchInput.addEventListener('input', applyFilters);
+
+        // Handle file upload
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                
+                // Assuming the first sheet contains the data
+                const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(worksheet);
+                
+                if (jsonData.length > 0) {
+                    deviceData = jsonData;
+                    initializeApp();
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        // Initialize the app with data
+        function initializeApp() {
+            // Show filter and data sections
+            filterSection.classList.remove('hidden');
+            dataSection.classList.remove('hidden');
+            noDataMessage.classList.add('hidden');
+            
+            // Populate filter dropdowns
+            populateFilters();
+            
+            // Display data
+            applyFilters();
+        }
+
+        // Populate filter dropdowns with unique values
+        function populateFilters() {
+            // Family filter
+            const families = [...new Set(deviceData.map(item => item.Family))];
+            familyFilter.innerHTML = '<option value="">All Families</option>';
+            families.forEach(family => {
+                const option = document.createElement('option');
+                option.value = family;
+                option.textContent = family;
+                familyFilter.appendChild(option);
+            });
+            
+            // Power Method filter
+            const powerMethods = [...new Set(deviceData.map(item => item['Power Method']))];
+            powerFilter.innerHTML = '<option value="">All Power Methods</option>';
+            powerMethods.forEach(method => {
+                const option = document.createElement('option');
+                option.value = method;
+                option.textContent = method;
+                powerFilter.appendChild(option);
+            });
+        }
+
+        // Apply filters and update display
+        function applyFilters() {
+            const familyValue = familyFilter.value;
+            const powerValue = powerFilter.value;
+            const gmsValue = gmsFilter.value;
+            const searchValue = searchInput.value.toLowerCase();
+            
+            filteredData = deviceData.filter(item => {
+                return (
+                    (familyValue === '' || item.Family === familyValue) &&
+                    (powerValue === '' || item['Power Method'] === powerValue) &&
+                    (gmsValue === '' || item['Has GMS?'] === gmsValue) &&
+                    (searchValue === '' || 
+                     item.Model.toLowerCase().includes(searchValue) ||
+                     item['Main Distinction'].toLowerCase().includes(searchValue) ||
+                     item.Usecase.toLowerCase().includes(searchValue))
+                );
+            });
+            
+            updateDeviceCount();
+            renderTable();
+            renderCards();
+        }
+
+        // Update device count
+        function updateDeviceCount() {
+            deviceCount.textContent = filteredData.length;
+        }
+
+        // Render table view
+        function renderTable() {
+            tableBody.innerHTML = '';
+            
+            filteredData.forEach(item => {
+                const row = document.createElement('tr');
+                row.className = 'fade-in';
+                
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            ${item.Family}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${item.Model}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item['OS / Version']}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        ${item['Has GMS?'] === 'Yes' ? 
+                            '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Yes</span>' : 
+                         item['Has GMS?'] === 'Optional' ? 
+                            '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Optional</span>' : 
+                            '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">No</span>'}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item['Paper Width']}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item['Power Method']}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">${item.Usecase}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Render card view
+        function renderCards() {
+            cardView.innerHTML = '';
+            
+            filteredData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'device-card bg-white rounded-lg shadow-md p-6 fade-in';
+                
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mb-2">
+                                ${item.Family} Family
+                            </span>
+                            <h3 class="text-lg font-semibold text-gray-800">${item.Model}</h3>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-sm text-gray-500">${item['OS / Version']}</div>
+                            <div class="mt-1">
+                                ${item['Has GMS?'] === 'Yes' ? 
+                                    '<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">GMS: Yes</span>' : 
+                                 item['Has GMS?'] === 'Optional' ? 
+                                    '<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">GMS: Optional</span>' : 
+                                    '<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">GMS: No</span>'}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-sm text-gray-500">Paper Width:</span>
+                            <span class="text-sm font-medium">${item['Paper Width']}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm text-gray-500">Roll OD:</span>
+                            <span class="text-sm font-medium">${item['Roll OD']}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm text-gray-500">Power:</span>
+                            <span class="text-sm font-medium">${item['Power Method']}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm text-gray-500">Battery:</span>
+                            <span class="text-sm font-medium">${item['Battery Capacity']}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-4 border-t border-gray-200">
+                        <p class="text-sm text-gray-600 mb-2">${item['Main Distinction']}</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                            </svg>
+                            ${item.Usecase}
+                        </div>
+                    </div>
+                `;
+                
+                cardView.appendChild(card);
+            });
+        }
+    </script>
+</body>
 </html>
